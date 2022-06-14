@@ -1,3 +1,14 @@
+/*
+Примеры команд
+•	LIST
+•	ADD Какое-то дело
+•	ADD 4 Какое-то дело на четвёртом месте
+•	EDIT 3 Новое название дела
+•	DELETE 7 
+Команды вводятся одной строкой пользователем в консоль.
+
+ */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
