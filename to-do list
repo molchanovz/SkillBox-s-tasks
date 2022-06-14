@@ -1,0 +1,45 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            StringBuilder sb = new StringBuilder();
+            String action = sc.nextLine();
+            String[] text = action.split(" ");
+            switch (text[0]) {
+                case ("ADD"):
+                    ToString(sb, text, 1);
+                    list.add(sb.toString());
+                    break;
+                case ("LIST"):
+                    ToString(sb, text, 1);
+                    System.out.println(Arrays.toString(list.toArray()));
+                    break;
+                case ("EDIT"):
+                    ToString(sb, text, 2);
+                    list.set(Integer.parseInt(text[1]), sb.toString());
+                    break;
+                case ("DELETE"):
+                    ToString(sb, text, 1);
+                    try {
+                        list.remove(Integer.parseInt(text[1]));
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Такого элемента нет");
+                    }
+
+            }
+        }
+
+    }
+
+    private static void ToString(StringBuilder sb, String[] text, int a) {
+        for (int i = a; i < text.length; i++) {
+            sb.append(text[i]);
+            if (i < text.length - 1) sb.append(" ");
+        }
+    }
+}
