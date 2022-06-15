@@ -1,0 +1,69 @@
+package Module5;
+
+import java.util.*;
+
+/*
+- Создание генератора красивых автомобильных номеров;
+- Создание массива на 100 номеров;
+- Сортировка по алфавиту с помощью TreeSet.
+ */
+public class AutoNumber {
+    public static void main(String[] args) {
+        String[] mass = new String[100];
+        TreeSet<String> hs = new TreeSet<>();
+        for (int i = 0; i < mass.length; i++) {
+            mass[i] = new Number().number;
+            hs.add(mass[i]);
+        }
+        System.out.println(hs);
+    }
+
+    static class Number {
+        private char x;
+        private String num;
+        private String obl;
+        String number;
+
+        Number() {
+            x = CharGen();
+            num = Numgen(1, 1000);
+            obl = OblGen(1, 200);
+            number = x + num + x + x + obl;
+        }
+
+        private static String Numgen(int min, int max) {
+            int rand = (int) (Math.random() * (max - min) + min);
+            char[] mass = String.valueOf(rand).toCharArray();
+            StringBuilder str = new StringBuilder();
+            if (mass.length < 2) {
+                str.append("00");
+                str.append(rand);
+                return String.valueOf(str);
+            } else if (mass.length < 3) {
+                str.append("0");
+                str.append(rand);
+                return String.valueOf(str);
+            }
+            str.append(rand);
+            return String.valueOf(str);
+        }
+
+        private static char CharGen() {
+            int rand = (int) (Math.random() * (31 - 0) + 0);
+            char a = (char) ('а' + rand);
+            return a;
+        }
+
+        private static String OblGen(int min, int max) {
+            int rand = (int) (Math.random() * (max - min) + min);
+            char[] mass = String.valueOf(rand).toCharArray();
+            if (mass.length < 2) {
+                StringBuilder str = new StringBuilder();
+                str.append("0");
+                str.append(rand);
+                return String.valueOf(str);
+            }
+            return String.valueOf(rand);
+        }
+    }
+}
