@@ -1,0 +1,90 @@
+/*
+1. Создайте класс BankAccount, который представляет собой расчётный счёт в банке. У класса необходимо написать методы:
+     a. Снять со счёта сумму денег (без комиссии).
+     b. Вносить на счёт сумму денег (без комиссии).
+     c. Получить остаток на счёте.
+2. Создайте два класса наследника, расширяющие работу с остатком на счёте:
+•	Депозитный расчётный счёт, с которого нельзя снимать деньги в течение месяца после последнего внесения.
+•	Карточный счёт, при снятии денег с которого будет взиматься комиссия 1%.
+*/
+
+import java.util.Date;
+
+public class Bank {
+    public static void main(String[] args) {
+        Card acc = new Card(100);
+        acc.add(100);
+        acc.get(200);
+    }
+}
+
+class BankAccount {
+    double check;
+
+    BankAccount(double check) {
+        this.check = check;
+    }
+
+    public double balance() {
+        return check;
+    }
+
+    public void add(int money) {
+        System.out.println("Внесено " + money + " у.е");
+        this.check += money;
+    }
+
+
+    public void get(int money) {
+        if (money <= this.check) {
+            System.out.println("Списано " + money + " у.е");
+            this.check -= money;
+        } else {
+            System.out.println("Недостаточно средств");
+        }
+
+    }
+}
+
+class Deposit extends BankAccount {
+    long OperationDate;
+
+    Deposit(double check) {
+        super(check);
+    }
+
+    @Override
+    public void add(int money) {
+        super.add(money);
+        OperationDate = new Date().getTime();
+    }
+
+    @Override
+    public void get(int money) {
+        long month = 25920001000l;
+        long diff = (new Date().getTime()) - OperationDate;
+        //long diff = 25920001001l;//проверка - если diff больше миллисекунд в месяце, то сумма спишется
+        if ((diff) > month) {
+            super.get(money);
+        } else System.out.println("С последнего зачисления месяц еще не прошел");
+
+    }
+}
+
+class Card extends BankAccount {
+
+    Card(double check) {
+        super(check);
+    }
+
+    @Override
+    public void get(int money) {
+        double commission = money * 1.1;
+        if (commission <= this.check) {
+            System.out.println("Списано " + commission + " у.е с учетом комиссии 1%");
+            this.check -= commission;
+        } else {
+            System.out.println("Недостаточно средств. Не хватает " + Math.ceil(commission - check) + "у.е.");
+        }
+    }
+}
