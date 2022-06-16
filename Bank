@@ -6,15 +6,18 @@
 2. Создайте два класса наследника, расширяющие работу с остатком на счёте:
 •	Депозитный расчётный счёт, с которого нельзя снимать деньги в течение месяца после последнего внесения.
 •	Карточный счёт, при снятии денег с которого будет взиматься комиссия 1%.
+3. Напишите метод в классе BankAccount для отправки денег с одного счёта на другой. Метод должен вернуть соответстующее сообщение, если деньги успешно переведены.
 */
 
 import java.util.Date;
 
 public class Bank {
     public static void main(String[] args) {
-        Card acc = new Card(100);
+        Card acc = new Card(0);
+        Card acc2 = new Card(0);
         acc.add(100);
-        acc.get(200);
+        System.out.println(acc.send(acc2, 100));
+
     }
 }
 
@@ -29,13 +32,13 @@ class BankAccount {
         return check;
     }
 
-    public void add(int money) {
+    public void add(double money) {
         System.out.println("Внесено " + money + " у.е");
         this.check += money;
     }
 
 
-    public void get(int money) {
+    public void get(double money) {
         if (money <= this.check) {
             System.out.println("Списано " + money + " у.е");
             this.check -= money;
@@ -43,6 +46,14 @@ class BankAccount {
             System.out.println("Недостаточно средств");
         }
 
+    }
+
+    String send(BankAccount receiver, int money) {
+        if (this.check >= money) {
+            this.check -= money;
+            receiver.check += money;
+            return "Деньги переведены";
+        } else return "Деньги не переведены." + "Остаток:" + this.check;
     }
 }
 
@@ -54,13 +65,13 @@ class Deposit extends BankAccount {
     }
 
     @Override
-    public void add(int money) {
+    public void add(double money) {
         super.add(money);
         OperationDate = new Date().getTime();
     }
 
     @Override
-    public void get(int money) {
+    public void get(double money) {
         long month = 25920001000l;
         long diff = (new Date().getTime()) - OperationDate;
         //long diff = 25920001001l;//проверка - если diff больше миллисекунд в месяце, то сумма спишется
@@ -78,7 +89,7 @@ class Card extends BankAccount {
     }
 
     @Override
-    public void get(int money) {
+    public void get(double money) {
         double commission = money * 1.1;
         if (commission <= this.check) {
             System.out.println("Списано " + commission + " у.е с учетом комиссии 1%");
