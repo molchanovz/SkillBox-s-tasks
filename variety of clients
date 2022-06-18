@@ -1,0 +1,93 @@
+package Module6;
+
+/*
+1. Создайте классы, представляющие клиентов банка: абстрактный класс Client, классы для физических лиц, юридических лиц и индивидуальных предпринимателей.
+У каждого клиента есть сумма денег на счету (число). Деньги можно положить на счёт, снять и вернуть остаток на счёте. Каждый класс должен содержать метод, который выводит информацию в консоль о счёте: условие пополнения, условие снятия и баланс.
+2. Реализуйте методы, при которых:
+•	У физических лиц пополнение и снятие происходит без комиссии.
+•	У юридических лиц — снятие с комиссией 1%.
+•	У ИП — пополнение с комиссией 1%, если сумма меньше 1000 рублей. И с комиссией 0,5%, если сумма больше либо равна 1000 рублей.
+*/
+
+public class ClientDB {
+    public static void main(String[] args) {
+        Client client = new IndEnt(100);
+        client.addMoney(1000);
+    }
+}
+
+abstract class Client {
+    protected void setMoney(double money) {
+        this.money = money;
+    }
+
+    protected double getMoney() {
+        return money;
+    }
+
+    private double money;
+
+    abstract void addMoney(double money);
+
+    abstract void usingMoney(double money);
+
+    abstract double balance();
+}
+
+class PhysicClient extends Client {
+
+    public PhysicClient() {
+        setMoney(0);
+    }
+
+    public PhysicClient(double money) {
+        setMoney(money);
+    }
+
+    @Override
+    void addMoney(double money) {
+        double money2 = getMoney() + money;
+        setMoney(money2);
+        System.out.println("Внесено "+money+". Сумма на счете равна "+money2);
+    }
+
+    @Override
+    void usingMoney(double money) {
+        if (money <= getMoney()) {
+            setMoney(getMoney() - money);
+            System.out.println("Снято " + money);
+        } else System.out.println("Недостаточно средств. Не хватает "+(int)Math.ceil(money-getMoney()));
+
+    }
+
+    @Override
+    double balance() {
+        return getMoney();
+    }
+}
+
+class UrClient extends PhysicClient {
+    UrClient(double money){
+        setMoney(money);
+    }
+    @Override
+    void usingMoney(double money) {
+        super.usingMoney(money*1.01);
+    }
+}
+
+class IndEnt extends PhysicClient{
+    IndEnt(double money){
+        setMoney(money);
+    }
+    @Override
+    void addMoney(double money) {
+        double komm=0;
+        if(money<1000){
+            komm=money*0.01;
+        }
+        else komm=money*0.005;
+        System.out.println("Комиссия равна "+komm);
+        super.addMoney(money-komm);
+    }
+}
