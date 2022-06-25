@@ -1,15 +1,35 @@
 package CompanyLogics;
 
+/*
+1. Создайте класс компании Company, содержащей сотрудников и реализующей методы:
+•	найм одного сотрудника — hire(),
+•	найм списка сотрудников – hireAll(),
+•	увольнение сотрудника – fire(),
+•	получение значения дохода компании – getCompanyMoney().
+Аргументы и возвращаемое значение методов выберите на основании логики работы вашего приложения.
+2. Создайте два метода, возвращающие список указанной длины (count). Они должны содержать сотрудников, отсортированных по убыванию и возрастанию заработной платы:
+•	List<Employee> getTopSalaryStaff(int count),
+•	List<Employee> getLowestSalaryStaff(int count).
+3. Создайте классы сотрудников с информацией о зарплатах и условиями начисления зарплаты:
+•	Manager — зарплата складывается из фиксированной части и бонуса в виде 5% от заработанных для компании денег. Количество заработанных денег для компании генерируйте случайным образом от 115 000 до 140 000 рублей.
+•	TopManager — зарплата складывается из фиксированной части и бонуса в виде 150% от заработной платы, если доход компании более 10 млн рублей.
+•	Operator — зарплата складывается только из фиксированной части.
+Каждый класс сотрудника должен имплементировать интерфейс Employee. В интерфейсе Employee должен быть объявлен метод, возвращающий зарплату сотрудника:
+•	getSalary()
+Аргументы и возвращаемое значение метода выберите в соответствии с логикой начисления зарплат.
+
+*/
+
 public class Main {
     public static void main(String[] args) {
         Company ozon = new Company();
         for (int i = 0; i < 4; i++) {
-            ozon.hire(new Operator("Оператор№"+(i+1),ozon));
+            ozon.hire(new Operator("Оператор№" + (i + 1), ozon));
         }
         for (int i = 0; i < 4; i++) {
-            ozon.hire(new Manager("Менеджер№"+(i+1),ozon));
+            ozon.hire(new Manager("Менеджер№" + (i + 1), ozon));
         }
-        ozon.hireAll(new EmployeeAbstract[]{new TopManager("Александр",ozon),new TopManager("Екатерина",ozon)});
+        ozon.hireAll(new EmployeeAbstract[]{new TopManager("Александр", ozon), new TopManager("Екатерина", ozon)});
         System.out.println(ozon.getTopSalaryStaff(10));
         System.out.println(ozon.getCompanyMoney());
         ozon.fire("Александр");

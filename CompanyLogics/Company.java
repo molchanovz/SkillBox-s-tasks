@@ -3,7 +3,7 @@ package CompanyLogics;
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class Company implements Comparator{
+public class Company implements Comparator {
 
     List<EmployeeAbstract> list = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class Company implements Comparator{
         }
     }
 
-    public ArrayList<String> getAll(){
+    public ArrayList<String> getAll() {
         ArrayList<String> sortedList = new ArrayList<String>();
         for (EmployeeAbstract emp : list) {
             sortedList.add(emp.showAll());
@@ -35,7 +35,7 @@ public class Company implements Comparator{
         return sortedList;
     }
 
-    public List<EmployeeAbstract> getSortedList(){
+    public List<EmployeeAbstract> getSortedList() {
         list.sort(SalaryComparator);
         return list;
     }
@@ -48,7 +48,7 @@ public class Company implements Comparator{
                 sortedList.add(list.get(i).showAll());
             }
             return sortedList;
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.print("Неверное значение, ");
             return new ArrayList<>();
         }
@@ -63,17 +63,17 @@ public class Company implements Comparator{
                 sortedList.add(list.get(i).showAll());
             }
             return sortedList;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.print("Неверное значение, ");
             return new ArrayList<>();
         }
     }
 
-    public void fire(String name){
+    public void fire(String name) {
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getName().equals(name)){
+            if (list.get(i).getName().equals(name)) {
                 list.remove(i);
-                System.out.println("Был удален сотрдник - "+name);
+                System.out.println("Был удален сотрдник - " + name);
             }
         }
     }

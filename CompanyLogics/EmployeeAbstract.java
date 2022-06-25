@@ -6,8 +6,8 @@ public class EmployeeAbstract implements Employee {
     private String jobTitle;
 
 
-    public String showAll(){
-        return (name +" - "+ jobTitle +" - "+ salary);
+    public String showAll() {
+        return (name + " - " + jobTitle + " - " + salary);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class EmployeeAbstract implements Employee {
     }
 
     @Override
-    public void setSalary(Company company,double salary) {
+    public void setSalary(Company company, double salary) {
 
         this.salary = salary;
     }
